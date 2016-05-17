@@ -1,0 +1,4 @@
+%h1 Upload your NOTAM file
+= form_tag notam_path, method: :post, multipart: true do
+  = file_field_tag :notam
+  = submit_tag 'Upload'
