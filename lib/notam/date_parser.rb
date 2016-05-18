@@ -4,11 +4,13 @@ class Notam::DateParser
   REGEX =/(\
 (?<day>MON|TUE|WED|THU|FRI|SAT|SUN)\
 (-(?<day_to>MON|TUE|WED|THU|FRI|SAT|SUN))?\
-(?<times>(\s(\d{4})\-(\d{4}))+|\sCLSD))/
+(?<times>(,?\s(\d{4})\-(\d{4}))+|\sCLSD))/
 
   TIMES_REGEX = /(\d{4}\-\d{4})|(CLSD)/
 
   DAYS = [:mon, :tue, :wed, :thu, :fri, :sat, :sun]
+
+  CLOSED = 'CLSD'
 
   def initialize(message)
     fail 'Invalid message format' unless REGEX.match(message)
@@ -53,6 +55,8 @@ class Notam::DateParser
   end
 
   def parse_times(data)
-    data.scan(TIMES_REGEX).flatten.compact
+    data.scan(TIMES_REGEX).flatten.compact.map do |time|
+      time == CLOSED ? 'CLOSED' : time
+    end
   end
 end

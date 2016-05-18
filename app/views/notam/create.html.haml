@@ -1,0 +1,13 @@
+%table#hours-of-service
+  %thead
+    %tr
+      %th
+        Code
+      - day_headers.each do |header|
+        %th= header
+  %tbody
+    - @rows.each do |row|
+      %tr
+        %td= row.code
+        - day_keys.each do |day|
+          %td= row[day].join('<br/>').html_safe

@@ -3,10 +3,10 @@ require 'notam/date_parser'
 describe Notam::DateParser do
   let(:message) { 'AERODROME CONTROL TOWER (TWR) HOURS OF OPS/SERVICE ' \
                 'MON 0445-1845 ' \
-                'TUE 0445-2030 2230-2359 ' \
+                'TUE 0445-2030, 2230-2359 ' \
                 'WED-FRI 0445-2030 ' \
                 'SAT CLSD ' \
-                'SUN 0600-0700 1215-1930' }
+                'SUN 0600-0700, 1215-1930' }
 
   subject(:parser) { Notam::DateParser.new(message) }
 
@@ -31,6 +31,6 @@ describe Notam::DateParser do
   end
 
   it 'handles closed days' do
-    expect(parser[:sat]).to eq ['CLSD']
+    expect(parser[:sat]).to eq ['CLOSED']
   end
 end
