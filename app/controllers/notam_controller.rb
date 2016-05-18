@@ -14,8 +14,8 @@ class NotamController < ApplicationController
 
   private
 
-  def hours_of_service(io)
-    source = io.open
+  def hours_of_service(file)
+    source = file.open
     parser = NotamParser.new(source)
     filter = Notam::MessageFilter.new(/AERODROME HOURS OF OPS\/SERVICE/)
 
@@ -23,6 +23,6 @@ class NotamController < ApplicationController
       Notam::HoursOfService.new(notam)
     end
   ensure
-    io.close
+    file.close
   end
 end
